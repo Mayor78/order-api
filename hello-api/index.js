@@ -1,23 +1,11 @@
 const express = require('express');
-const serverless = require('serverless-http');
 const app = express();
+const port = process.env.PORT || 3000;
 
-app.use(express.json());
-
-// In-memory storage for orders
-let orders = [];
-
-// GET endpoint to retrieve all orders
-app.get('/orders', (req, res) => {
-  res.json(orders);
+app.get('/', (req, res) => {
+  res.send('Hello');
 });
 
-// POST endpoint to create a new order
-app.post('/orders', (req, res) => {
-  const newOrder = req.body;
-  newOrder.id = orders.length + 1; // Simple ID assignment logic
-  orders.push(newOrder);
-  res.status(201).json(newOrder);
+app.listen(port, () => {
+  console.log(`Server is running on http://localhost:${port}`);
 });
-
-module.exports.handler = serverless(app);
